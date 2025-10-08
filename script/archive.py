@@ -23,6 +23,7 @@ def main():
   globs = [
     out_bin + '/*.a',
     out_bin + '/*.lib',
+    out_bin + '/*.dylib',
     out_bin + '/icudtl.dat',
     'include/**/*',
     'modules/particles/include/*.h',
@@ -74,6 +75,12 @@ def main():
     'third_party/externals/zlib/*.h',
     "third_party/icu/*.h"
   ]
+
+  if target == 'macos':
+    globs += [
+      out_bin + '/libEGL.dylib',
+      out_bin + '/libGLESv2.dylib'
+    ]
 
   dist = 'Skia-' + version + '-' + target + '-' + build_type + '-' + machine + classifier + '.zip'
   print('> Writing', dist)
