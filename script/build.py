@@ -46,6 +46,7 @@ def main():
         args += ['skia_use_gl=true']
         args += ['skia_use_egl=true']
         args += ['skia_use_angle=true']
+        args += ['angle_enable_shared_library=true']
         args += ['skia_gl_standard="gles"']
     args += ['extra_cflags_cc=["-frtti"]']
     args += ['skia_use_metal=true']
