@@ -43,6 +43,7 @@ def main():
   if isMacos or isIos or isTvos:
     if isMacos:
         args += ['skia_use_fonthost_mac=true']
+        args += ['skia_gl_standard="gles"']  # ADD THIS LINE - Force GLES for ANGLE
     args += ['extra_cflags_cc=["-frtti"]']
     args += ['skia_use_metal=true']
     if isIos:
