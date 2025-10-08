@@ -43,7 +43,8 @@ def main():
   if isMacos or isIos or isTvos:
     if isMacos:
         args += ['skia_use_fonthost_mac=true']
-        args += ['skia_gl_standard="gles"']  # ADD THIS LINE - Force GLES for ANGLE
+        args += ['skia_gl_standard="gles"']
+        args += ['skia_use_angle=true']
     args += ['extra_cflags_cc=["-frtti"]']
     args += ['skia_use_metal=true']
     if isIos:
@@ -64,9 +65,9 @@ def main():
           args += ['extra_cflags=["-mtvos-version-min=14", "-DSK_BUILD_FOR_TVOS"]'] 
       else:
         if 'arm64' == machine:
-          args += ['extra_cflags=["-stdlib=libc++"]']
+          args += ['extra_cflags=["-stdlib=libc++", "-DSK_ASSUME_GL_ES=1", "-DSK_SUPPORT_GPU=1", "-DSK_GL"]']
         else:
-          args += ['extra_cflags=["-stdlib=libc++", "-mmacosx-version-min=10.13"]']
+          args += ['extra_cflags=["-stdlib=libc++", "-mmacosx-version-min=10.13", "-DSK_ASSUME_GL_ES=1", "-DSK_SUPPORT_GPU=1", "-DSK_GL"]']
   elif 'linux' == target:
     if 'arm64' == machine:
         # TODO: use clang on all targets!
