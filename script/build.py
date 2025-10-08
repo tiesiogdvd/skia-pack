@@ -43,8 +43,11 @@ def main():
   if isMacos or isIos or isTvos:
     if isMacos:
         args += ['skia_use_fonthost_mac=true']
-        args += ['skia_gl_standard="gles"']
+        args += ['skia_use_gl=true']
+        args += ['skia_use_egl=true']
         args += ['skia_use_angle=true']
+        args += ['angle_enable_shared_library=true']
+        args += ['skia_gl_standard="gles"']
     args += ['extra_cflags_cc=["-frtti"]']
     args += ['skia_use_metal=true']
     if isIos:
@@ -144,7 +147,15 @@ def main():
   gn = 'gn.exe' if 'windows' == host else 'gn'
   print([os.path.join('bin', gn), 'gen', out, '--args=' + ' '.join(args)])
   subprocess.check_call([os.path.join('bin', gn), 'gen', out, '--args=' + ' '.join(args)])
-  subprocess.check_call([os.path.join('..', tools_dir, ninja), '-C', out, 'skia', 'modules'])
+
+  ninja_targets = ['skia', 'modules']
+  if isMacos:
+    ninja_targets.extend([
+      '//third_party/externals/angle2:libEGL',
+      '//third_party/externals/angle2:libGLESv2',
+    ])
+
+  subprocess.check_call([os.path.join('..', tools_dir, ninja), '-C', out] + ninja_targets)
 
   return 0
 
