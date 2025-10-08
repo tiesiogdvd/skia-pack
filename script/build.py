@@ -150,7 +150,10 @@ def main():
 
   ninja_targets = ['skia', 'modules']
   if isMacos:
-    ninja_targets.extend(['libEGL', 'libGLESv2'])
+    ninja_targets.extend([
+      '//third_party/externals/angle2:libEGL',
+      '//third_party/externals/angle2:libGLESv2',
+    ])
 
   subprocess.check_call([os.path.join('..', tools_dir, ninja), '-C', out] + ninja_targets)
 
